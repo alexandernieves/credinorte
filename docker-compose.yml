@@ -1,0 +1,83 @@
+version: '3.8'
+
+networks:
+  creditnorte_net:
+    driver: bridge
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: creditnorte_db
+    ports:
+      - "5436:5432"   # Puerto 5436 en el host (evita colisión con Odoo en 5435)
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-creditnorte}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-creditnorte_secure_2026}
+      POSTGRES_DB: ${DB_DATABASE:-creditnorte}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - creditnorte_net
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-creditnorte} -d ${DB_DATABASE:-creditnorte}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./backend
+    container_name: creditnorte_backend
+    expose:
+      - "4000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: ${DB_USERNAME:-creditnorte}
+      DB_PASSWORD: ${DB_PASSWORD:-creditnorte_secure_2026}
+      DB_DATABASE: ${DB_DATABASE:-creditnorte}
+      JWT_SECRET: ${JWT_SECRET:-creditnorte-jwt-secret-change-in-production}
+      PORT: 4000
+      NODE_ENV: production
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - creditnorte_net
+    restart: always
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://201.221.112.97/api}
+    container_name: creditnorte_frontend
+    expose:
+      - "3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    depends_on:
+      - backend
+    networks:
+      - creditnorte_net
+    restart: always
+
+  nginx:
+    image: nginx:alpine
+    container_name: creditnorte_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - creditnorte_net
+    restart: always
+
+volumes:
+  postgres_data:
+    name: creditnorte_postgres_data

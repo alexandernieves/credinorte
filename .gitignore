@@ -1,0 +1,33 @@
+# Variables de entorno - NUNCA subir al repositorio
+.env
+.env.*
+!.env.example
+
+# Dependencias
+node_modules/
+*/node_modules/
+
+# Builds
+dist/
+build/
+.next/
+*/dist/
+*/build/
+*/.next/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Electron builds
+desktop/dist/

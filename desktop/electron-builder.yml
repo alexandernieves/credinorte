@@ -1,0 +1,44 @@
+appId: com.creditnorte.app
+productName: CreditNorte
+copyright: Copyright © 2026 CreditNorte
+
+# Directorio de salida de los builds
+directories:
+  output: dist
+  buildResources: assets
+
+# Archivos a incluir en el build
+files:
+  - electron/**/*
+  - package.json
+  - "!node_modules/**/*"
+
+# ─── Publicación en GitHub Releases ──────────────────────────────────────────
+publish:
+  provider: github
+  owner: alexandernieves
+  repo: credinorte
+  private: false
+  releaseType: release
+
+# ─── Windows (único target) ───────────────────────────────────────────────────
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: assets/icon.ico
+  requestedExecutionLevel: asInvoker
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  installerIcon: assets/icon.ico
+  uninstallerIcon: assets/icon.ico
+  installerHeaderIcon: assets/icon.ico
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: CreditNorte
+  artifactName: "CreditNorte-Setup-${version}.exe"
+

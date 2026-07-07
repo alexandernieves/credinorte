@@ -1,0 +1,40 @@
+name: 🖥️ Build & Publish Desktop Release (Windows)
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'    # Trigger en tags tipo v1.0.0, v1.2.3, etc.
+
+jobs:
+  build-windows:
+    name: Build Electron App for Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: 📥 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: desktop/package-lock.json
+
+      - name: 📦 Install desktop dependencies
+        working-directory: desktop
+        run: npm ci
+
+      - name: 🏗️ Build & Publish Electron app (Windows)
+        working-directory: desktop
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run dist:win
+
+      - name: 📤 Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CreditNorte-Windows-${{ github.ref_name }}
+          path: desktop/dist/*.exe
+          if-no-files-found: warn
+

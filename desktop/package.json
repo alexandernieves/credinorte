@@ -1,0 +1,30 @@
+{
+  "name": "creditnorte",
+  "version": "0.1.0",
+  "description": "CreditNorte - Sistema de Gestión Comercial (App de Escritorio)",
+  "main": "electron/main.js",
+  "homepage": ".",
+  "author": {
+    "name": "CreditNorte",
+    "email": "soporte@creditnorte.com"
+  },
+  "scripts": {
+    "start":    "electron .",
+    "dev":      "ELECTRON_IS_DEV=1 electron .",
+    "dist":     "electron-builder --publish always",
+    "dist:win": "electron-builder --win --publish always",
+    "dist:mac": "electron-builder --mac --publish always",
+    "dist:linux": "electron-builder --linux --publish always",
+    "pack":     "electron-builder --dir"
+  },
+  "build": {
+    "extends": "./electron-builder.yml"
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  },
+  "devDependencies": {
+    "electron": "^32.0.0",
+    "electron-builder": "^25.1.8"
+  }
+}

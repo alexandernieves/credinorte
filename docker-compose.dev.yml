@@ -1,0 +1,56 @@
+version: '3.8'
+
+# Entorno de DESARROLLO LOCAL
+# Uso: docker compose -f docker-compose.dev.yml up
+# Los servicios exponen sus puertos directamente sin Nginx
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: creditnorte_db_dev
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: creditnorte
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+    container_name: creditnorte_backend_dev
+    ports:
+      - "4000:4000"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: creditnorte
+      JWT_SECRET: creditnorte-auth-key-jwt-2026-secret
+      PORT: 4000
+      NODE_ENV: development
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:4000
+    container_name: creditnorte_frontend_dev
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_dev_data:
