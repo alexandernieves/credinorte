@@ -7,8 +7,8 @@ const path = require('path');
 // ─── Configuración ───────────────────────────────────────────────────────────
 const IS_DEV       = process.env.ELECTRON_IS_DEV === '1';
 const SERVER_URL   = IS_DEV
-  ? 'http://localhost:3000'          // Desarrollo: apunta al servidor local
-  : 'http://201.221.112.97';        // Producción: apunta al servidor Ubuntu
+  ? 'http://localhost:3000'                            // Desarrollo: servidor local
+  : 'https://credinorte-frontend.onrender.com';       // Producción: Render
 
 const APP_NAME     = 'CreditNorte';
 const WINDOW_MIN_W = 1280;

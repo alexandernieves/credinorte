@@ -1,0 +1,57 @@
+services:
+  # ─── Backend NestJS ───────────────────────────────────────────────────────
+  - type: web
+    name: credinorte-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: credinorte-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: credinorte-db
+          property: port
+      - key: DB_USERNAME
+        fromDatabase:
+          name: credinorte-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: credinorte-db
+          property: password
+      - key: DB_DATABASE
+        fromDatabase:
+          name: credinorte-db
+          property: database
+      - key: JWT_SECRET
+        value: cn_jwt_8f3a91b2e4d7c6f0a5b8e1d4c7f2a9b3e6d9c2f5a8b1e4d7c0f3a6b9e2d5c8
+      - key: PORT
+        value: "4000"
+      - key: NODE_ENV
+        value: production
+
+  # ─── Frontend Next.js ─────────────────────────────────────────────────────
+  - type: web
+    name: credinorte-frontend
+    runtime: docker
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
+    plan: free
+    dockerBuildArgs:
+      NEXT_PUBLIC_API_URL: https://credinorte-backend.onrender.com/api
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+
+# ─── Base de Datos PostgreSQL ──────────────────────────────────────────────
+databases:
+  - name: credinorte-db
+    databaseName: creditnorte
+    user: creditnorte
+    plan: free
