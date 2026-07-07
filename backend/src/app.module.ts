@@ -49,6 +49,7 @@ import { DashboardDataModule } from './dashboard-data/dashboard-data.module';
           RememberToken,
         ],
         synchronize: true, // Auto create/update schema (recommended for monolith dev)
+        ssl: config.get<string>('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
       }),
     }),
     // TypeORM Feature modules for seeding/routing can be added here
