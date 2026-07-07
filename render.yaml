@@ -3,9 +3,8 @@ services:
   - type: web
     name: credinorte-backend
     env: node
-    rootDir: backend
-    buildCommand: npm ci && npm run build
-    startCommand: npm run start:prod
+    buildCommand: cd backend && npm ci && npm run build
+    startCommand: cd backend && npm run start:prod
     plan: free
     envVars:
       - key: DB_HOST
@@ -39,9 +38,8 @@ services:
   - type: web
     name: credinorte-frontend
     env: node
-    rootDir: frontend
-    buildCommand: npm ci && npm run build
-    startCommand: npm run start
+    buildCommand: cd frontend && npm ci && npm run build
+    startCommand: cd frontend && npm run start
     plan: free
     envVars:
       - key: NEXT_PUBLIC_API_URL
