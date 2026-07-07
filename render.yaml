@@ -2,9 +2,10 @@ services:
   # ─── Backend NestJS ───────────────────────────────────────────────────────
   - type: web
     name: credinorte-backend
-    runtime: docker
-    dockerfilePath: ./backend/Dockerfile
-    dockerContext: ./backend
+    env: node
+    rootDir: backend
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start:prod
     plan: free
     envVars:
       - key: DB_HOST
@@ -37,13 +38,14 @@ services:
   # ─── Frontend Next.js ─────────────────────────────────────────────────────
   - type: web
     name: credinorte-frontend
-    runtime: docker
-    dockerfilePath: ./frontend/Dockerfile
-    dockerContext: ./frontend
+    env: node
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
     plan: free
-    dockerBuildArgs:
-      NEXT_PUBLIC_API_URL: https://credinorte-backend.onrender.com/api
     envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://credinorte-backend.onrender.com/api
       - key: NODE_ENV
         value: production
       - key: PORT
