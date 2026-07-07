@@ -1,9 +1,7 @@
-name: 🚀 Deploy to Server
+name: 🚀 Deploy to Server (DISABLED - using Render instead)
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:   # Solo se activa manualmente, no en push
 
 jobs:
   deploy:
