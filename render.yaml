@@ -3,7 +3,7 @@ services:
   - type: web
     name: credinorte-backend
     env: node
-    buildCommand: cd backend && npm ci && npm run build
+    buildCommand: cd backend && npm ci --include=dev && npm run build
     startCommand: cd backend && npm run start:prod
     plan: free
     envVars:
@@ -38,7 +38,7 @@ services:
   - type: web
     name: credinorte-frontend
     env: node
-    buildCommand: cd frontend && npm ci && npm run build
+    buildCommand: cd frontend && npm ci --include=dev && npm run build
     startCommand: cd frontend && npm run start
     plan: free
     envVars:
