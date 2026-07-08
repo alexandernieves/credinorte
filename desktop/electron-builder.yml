@@ -49,6 +49,8 @@ mac:
   icon: assets/icon.icns
   category: public.app-category.business
   artifactName: "CreditNorte-${version}-${arch}.dmg"
+  hardenedRuntime: false
+  gatekeeperAssess: false
 
 dmg:
   title: CreditNorte
