@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: CreditNorte-macOS-${{ github.ref_name }}
-          path: desktop/dist/*.zip
+          path: desktop/dist/*.dmg
           if-no-files-found: warn
 
 
