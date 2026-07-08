@@ -41,14 +41,11 @@ nsis:
 # ─── macOS ─────────────────────────────────────────────────────────────────────
 mac:
   target:
-    - target: dmg
+    - target: zip
       arch:
         - x64
         - arm64
   category: public.app-category.business
-  artifactName: "CreditNorte-${version}-${arch}.dmg"
+  artifactName: "CreditNorte-${version}-${arch}.zip"
 
-dmg:
-  title: CreditNorte
-  backgroundColor: "#0f172a"
 

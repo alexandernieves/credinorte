@@ -1,6 +1,6 @@
 {
   "name": "creditnorte",
-  "version": "0.1.0",
+  "version": "0.1.5",
   "description": "CreditNorte - Sistema de Gestión Comercial (App de Escritorio)",
   "main": "electron/main.js",
   "homepage": ".",
