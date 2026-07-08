@@ -21,7 +21,7 @@ publish:
   private: false
   releaseType: release
 
-# ─── Windows (único target) ───────────────────────────────────────────────────
+# ─── Windows ──────────────────────────────────────────────────────────────────
 win:
   target:
     - target: nsis
@@ -37,4 +37,18 @@ nsis:
   createStartMenuShortcut: true
   shortcutName: CreditNorte
   artifactName: "CreditNorte-Setup-${version}.exe"
+
+# ─── macOS ─────────────────────────────────────────────────────────────────────
+mac:
+  target:
+    - target: dmg
+      arch:
+        - x64
+        - arm64
+  category: public.app-category.business
+  artifactName: "CreditNorte-${version}-${arch}.dmg"
+
+dmg:
+  title: CreditNorte
+  backgroundColor: "#0f172a"
 
