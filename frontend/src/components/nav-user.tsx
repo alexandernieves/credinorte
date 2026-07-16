@@ -30,6 +30,7 @@ import {
   Settings2Icon 
 } from "lucide-react"
 import { toast } from "sonner"
+import { useAuth } from "@/context/auth-context"
 
 export function NavUser({
   user,
@@ -43,6 +44,7 @@ export function NavUser({
   onSelectModule: (module: string) => void
 }) {
   const { isMobile } = useSidebar()
+  const { logout } = useAuth()
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -116,7 +118,10 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => toast.success("Cerrando sesión...")}>
+            <DropdownMenuItem onClick={() => {
+              toast.success("Cerrando sesión...")
+              logout()
+            }}>
               <LogOutIcon className="size-4 mr-2" />
               Cerrar Sesión
             </DropdownMenuItem>

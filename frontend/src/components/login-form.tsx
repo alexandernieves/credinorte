@@ -199,12 +199,13 @@ export function LoginForm({
             {isSubmitting ? "Iniciando sesión..." : "Iniciar Sesión"}
           </Button>
         </Field>
-        <FieldSeparator>O continúa con</FieldSeparator>
+        {/* SSO disabled for now */}
+        {/* <FieldSeparator>O continúa con</FieldSeparator>
         <Field>
           <Button variant="outline" type="button" disabled className="w-full text-xs h-10 font-bold">
             Acceso Corporativo SSO
           </Button>
-        </Field>
+        </Field> */}
       </FieldGroup>
     </form>
   )
